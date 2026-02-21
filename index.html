@@ -618,18 +618,18 @@
 
     <section id="contact" class="contact">
         <h2 class="section-title">Связаться с нами</h2>
-        <!-- FORMULAIRE AVEC WEB3FORMS -->
+        
         <form class="contact-form" id="contactForm" action="https://api.web3forms.com/submit" method="POST">
-            <!-- REMPLACE CETTE CLÉ PAR TA PROPRE CLÉ OBTENUE SUR WEB3FORMS.COM -->
+            
             <input type="hidden" name="access_key" value="b3d2e90f-73de-4ddd-8c5a-f3eaf503c67a">
             
-            <!-- Redirection vers la page de confirmation -->
-            <input type="hidden" name="redirect" value="http://127.0.0.1:5500/test2.html">
             
-            <!-- Sujet de l'email -->
+           <input type="hidden" name="redirect" value="https://zing2026.github.io/natalia/test2.html">
+            
+            
             <input type="hidden" name="subject" value="Новое сообщение с сайта Недвижимости">
             
-            <!-- Anti-spam (honeypot) -->
+            
             <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
             
             <div class="form-group">
@@ -706,7 +706,7 @@
                     formMessage.className = 'error';
                     formMessage.textContent = 'Пожалуйста, заполните все обязательные поля';
                     
-                    // Cache le message après 5 secondes
+                    
                     setTimeout(() => {
                         formMessage.style.display = 'none';
                     }, 5000);
