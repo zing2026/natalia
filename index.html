@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>Наталья Вижн - Агентство недвижимости</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden; /* Empêche le défilement horizontal */
+        }
+
+        /* Header et Navigation - Version mobile first */
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0.8rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .logo {
+            font-size: 1.4rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+            white-space: nowrap;
+        }
+
+        /* Menu hamburger pour mobile */
+        .menu-toggle {
+            display: block;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: white;
+            background: none;
+            border: none;
+            padding: 0.5rem;
+        }
+
+        .nav-links {
+            display: none;
+            position: absolute;
+            top: 70px;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            flex-direction: column;
+            list-style: none;
+            padding: 1rem 0;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+            z-index: 999;
+        }
+
+        .nav-links.active {
+            display: flex;
+        }
+
+        .nav-links li {
+            margin: 0.8rem 0;
+            text-align: center;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            padding: 0.5rem 1rem;
+            display: block;
+            transition: opacity 0.3s;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.8;
+            background: rgba(255,255,255,0.1);
+        }
+
+        /* Section Hero - Optimisée mobile */
+        .hero {
+            min-height: 100vh;
+            height: auto;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('dom.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: scroll; /* Évite les problèmes sur mobile */
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: white;
+            padding: 100px 1rem 60px;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            width: 100%;
+        }
+
+        .hero h1 {
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease;
+            line-height: 1.3;
+        }
+
+        .hero p {
+            font-size: 1rem;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease 0.2s both;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            background: #ff6b6b;
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1rem;
+            transition: transform 0.3s, background 0.3s;
+            animation: fadeInUp 1s ease 0.4s both;
+            border: none;
+            cursor: pointer;
+            min-width: 200px;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .cta-button:hover {
+            background: #ff5252;
+            transform: translateY(-3px);
+        }
+
+        /* Section Propriétés */
+        .properties {
+            padding: 4rem 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 2.5rem;
+            color: #333;
+            line-height: 1.3;
+            padding: 0 1rem;
+        }
+
+        .property-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            padding: 0 0.5rem;
+        }
+
+        .property-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .property-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .property-image {
+            height: 220px;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .property-info {
+            padding: 1.5rem;
+            flex-grow: 1;
+        }
+
+        .property-info h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .property-price {
+            color: #ff6b6b;
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin: 0.5rem 0;
+        }
+
+        .property-details {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1rem 0;
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        /* Section À propos */
+        .about {
+            background: #f8f9fa;
+            padding: 4rem 1rem;
+        }
+
+        .about-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-text h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.3;
+        }
+
+        .about-text p {
+            margin-bottom: 1rem;
+            color: #666;
+            font-size: 1rem;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 0.5rem;
+        }
+
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #667eea;
+            line-height: 1.2;
+        }
+
+        .stat-item div:last-child {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .about-image img {
+            width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            height: auto;
+            display: block;
+        }
+
+        /* Section Contact */
+        .contact {
+            padding: 4rem 1rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .contact-form {
+            display: grid;
+            gap: 1.5rem;
+            padding: 0 0.5rem;
+        }
+
+        .form-group {
+            display: grid;
+            gap: 0.5rem;
+        }
+
+        .form-group label {
+            font-weight: 500;
+            font-size: 1rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            padding: 1rem;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 16px; /* Empêche le zoom sur iOS */
+            width: 100%;
+            transition: border-color 0.3s;
+            -webkit-appearance: none;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .form-group textarea {
+            height: 150px;
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .submit-button {
+            padding: 1.2rem;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+            width: 100%;
+            -webkit-tap-highlight-color: transparent;
+            min-height: 55px;
+        }
+
+        .submit-button:hover {
+            background: #764ba2;
+        }
+
+        .submit-button:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        /* Message de confirmation */
+        #formMessage {
+            display: none;
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+            margin-top: 1rem;
+            font-weight: 500;
+        }
+
+        #formMessage.success {
+            display: block;
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        #formMessage.error {
+            display: block;
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        /* Footer */
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem 1rem;
+        }
+
+        footer p {
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Améliorations tactiles */
+        button, a {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* Tablette (largeur minimale 600px) */
+        @media (min-width: 600px) {
+            .logo {
+                font-size: 1.6rem;
+            }
+
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .property-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .stats {
+                gap: 2rem;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+            }
+        }
+
+        /* Desktop (largeur minimale 900px) */
+        @media (min-width: 900px) {
+            .menu-toggle {
+                display: none; /* Cache le menu hamburger */
+            }
+
+            .nav-links {
+                display: flex !important; /* Toujours visible */
+                position: static;
+                background: none;
+                flex-direction: row;
+                padding: 0;
+                box-shadow: none;
+                width: auto;
+            }
+
+            .nav-links li {
+                margin: 0 0 0 2rem;
+            }
+
+            .nav-links a {
+                padding: 0;
+                font-size: 1rem;
+            }
+
+            .nav-links a:hover {
+                background: none;
+                opacity: 0.8;
+            }
+
+            .hero {
+                background-attachment: fixed;
+            }
+
+            .hero h1 {
+                font-size: 3.5rem;
+            }
+
+            .hero p {
+                font-size: 1.2rem;
+            }
+
+            .property-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .about-content {
+                grid-template-columns: 1fr 1fr;
+                gap: 4rem;
+            }
+
+            .about-text h2 {
+                font-size: 2.5rem;
+            }
+
+            .section-title {
+                font-size: 2.5rem;
+            }
+
+            .contact {
+                padding: 5rem 2rem;
+            }
+        }
+
+        /* Grands écrans */
+        @media (min-width: 1200px) {
+            .property-grid {
+                gap: 2.5rem;
+            }
+        }
+
+        /* Orientation paysage sur mobile */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .hero {
+                min-height: 120vh;
+                padding: 120px 1rem 80px;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">🏠 Наталья Вижн</div>
+            <button class="menu-toggle" id="menuToggle" aria-label="Menu">☰</button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#accueil" onclick="closeMenu()">приветствовать</a></li>
+                <li><a href="#proprietes" onclick="closeMenu()">Характеристики</a></li>
+                <li><a href="#about" onclick="closeMenu()">Мы</a></li>
+                <li><a href="#contact" onclick="closeMenu()">Контакт</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="accueil" class="hero">
+        <div class="hero-content">
+            <h1>Найдите дом своей мечты</h1>
+            <p>Откройте для себя эксклюзивную подборку исключительных объектов недвижимости в самых красивых районах города Барнаул.</p>
+            <a href="#contact" class="cta-button">Связаться с нами</a>
+        </div>
+    </section>
+
+    <section id="proprietes" class="properties">
+        <h2 class="section-title">Наши избранные объекты</h2>
+        <div class="property-grid">
+            <div class="property-card">
+                <div class="property-image" style="background-image: url('sobre.png')"></div>
+                <div class="property-info">
+                    <h3>Современная вилла</h3>
+                    <p>Проспект Комсомольского 78Б</p>
+                    <div class="property-price">1 250 000 ₽</div>
+                    <div class="property-details">
+                        <span>5 спальни</span>
+                        <span>120 м²</span>
+                        <span>Сад</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="property-card">
+                <div class="property-image" style="background-image: url('more.png')"></div>
+                <div class="property-info">
+                    <h3>Апартаменты с видом на море</h3>
+                    <p>Красноменский 69К</p>
+                    <div class="property-price">890 000 ₽</div>
+                    <div class="property-details">
+                        <span>4 спальни</span>
+                        <span>95 м²</span>
+                        <span>Терраса</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="property-card">
+                <div class="property-image" style="background-image: url('cla.png')"></div>
+                <div class="property-info">
+                    <h3>Классическая вилла</h3>
+                    <p>Калилина 78Т</p>
+                    <div class="property-price">650 000 ₽</div>
+                    <div class="property-details">
+                        <span>3 спальни</span>
+                        <span>85 м²</span>
+                        <span>Стоянка</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="about">
+        <div class="about-content">
+            <div class="about-text">
+                <h2>Ваш надежный партнер в сфере недвижимости</h2>
+                <p>Вот уже более 7 лет компания Наталья Вижн с энтузиазмом и профессионализмом поддерживает своих клиентов в реализации проектов в сфере недвижимости. Наша команда экспертов делает все возможное, чтобы найти для вас объект, идеально соответствующий вашим ожиданиям.</p>
+                <p>Мы считаем, что каждый заслуживает того, чтобы найти свой идеальный дом. Именно поэтому мы стремимся предоставлять вам персонализированное обслуживание и экспертные консультации на каждом этапе вашего проекта.</p>
+                <div class="stats">
+                    <div class="stat-item">
+                        <div class="stat-number">500+</div>
+                        <div>Проданный товар</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">98%</div>
+                        <div>Довольные клиенты</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">7</div>
+                        <div>Многолетний опыт</div>
+                    </div>
+                </div>
+            </div>
+            <div class="about-image">
+                <img src="tro.png" alt="Équipe d'agents immobiliers" loading="lazy">
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <h2 class="section-title">Связаться с нами</h2>
+        <!-- FORMULAIRE AVEC WEB3FORMS -->
+        <form class="contact-form" id="contactForm" action="https://api.web3forms.com/submit" method="POST">
+            <!-- REMPLACE CETTE CLÉ PAR TA PROPRE CLÉ OBTENUE SUR WEB3FORMS.COM -->
+            <input type="hidden" name="access_key" value="b3d2e90f-73de-4ddd-8c5a-f3eaf503c67a">
+            
+            <!-- Redirection vers la page de confirmation -->
+            <input type="hidden" name="redirect" value="http://127.0.0.1:5500/test2.html">
+            
+            <!-- Sujet de l'email -->
+            <input type="hidden" name="subject" value="Новое сообщение с сайта Недвижимости">
+            
+            <!-- Anti-spam (honeypot) -->
+            <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+            
+            <div class="form-group">
+                <label for="nom" title="Введите свое полное имя">Полное имя *</label>
+                <input type="text" id="nom" name="Имя" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Почта *</label>
+                <input type="email" id="email" name="Email" required>
+            </div>
+            <div class="form-group">
+                <label for="telephone">Телефон</label>
+                <input type="tel" id="telephone" name="Телефон">
+            </div>
+            <div class="form-group">
+                <label for="message">Сообщение *</label>
+                <textarea id="message" name="Сообщение" required></textarea>
+            </div>
+            <button type="submit" class="submit-button" id="submitBtn">Отправлять</button>
+            <div id="formMessage"></div>
+        </form>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Наталья Вижн - Все права защищены</p>
+        <p style="margin-top: 1rem; font-size: 0.9rem;">Барнаул, ул. Попова, 2066, офис 12 | Тел: +7 (962) 822-55-79</p>
+    </footer>
+
+    <script>
+        
+        const menuToggle = document.getElementById('menuToggle');
+        const navLinks = document.getElementById('navLinks');
+
+        function toggleMenu() {
+            navLinks.classList.toggle('active');
+        }
+
+        function closeMenu() {
+            if (window.innerWidth < 900) {
+                navLinks.classList.remove('active');
+            }
+        }
+
+        if (menuToggle) {
+            menuToggle.addEventListener('click', toggleMenu);
+        }
+
+        
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', closeMenu);
+        });
+
+        
+        window.addEventListener('resize', function() {
+            if (window.innerWidth >= 900) {
+                navLinks.classList.remove('active');
+            }
+        });
+
+        
+        const contactForm = document.getElementById('contactForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const formMessage = document.getElementById('formMessage');
+
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(e) {
+              
+                const nom = document.getElementById('nom').value.trim();
+                const email = document.getElementById('email').value.trim();
+                const message = document.getElementById('message').value.trim();
+
+                if (!nom || !email || !message) {
+                    e.preventDefault();
+                    formMessage.className = 'error';
+                    formMessage.textContent = 'Пожалуйста, заполните все обязательные поля';
+                    
+                    // Cache le message après 5 secondes
+                    setTimeout(() => {
+                        formMessage.style.display = 'none';
+                    }, 5000);
+                    
+                    return false;
+                }
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Отправка...';
+                formMessage.className = 'success';
+                formMessage.textContent = 'Отправка... Пожалуйста, подождите';
+                
+                return true;
+            });
+        }
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const headerOffset = 80;
+                    const elementPosition = target.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        if (window.location.hash === '#contact' && window.location.search.includes('success')) {
+            formMessage.className = 'success';
+            formMessage.textContent = 'Сообщение отправлено! Мы свяжемся с вами скоро.';
+            setTimeout(() => {
+                formMessage.style.display = 'none';
+            }, 5000);
+        }
+    </script>
+</body>
+</html>
